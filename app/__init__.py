@@ -9,6 +9,7 @@ from flask import (
     Flask,
     jsonify,
     send_from_directory,
+    render_template,
     request,
     redirect,
     url_for
@@ -41,24 +42,14 @@ app = create_app()
 
 @app.route("/", methods=["GET", "POST"])
 def index():
+    stream_url = None
     if request.method == "POST":
         result = {}
         ydl_opts = {}
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             result = ydl.extract_info(request.form['url'], download=False)
 
-        stream_url = None
         if 'url' in result:
             stream_url = result['url']
-        return f"""
-        <!doctype html>
-        <p><a href="vlc://{stream_url}">Play</a></p>
-        """
-        
-    return f"""
-    <!doctype html>
-    <form action="" method=post>
-      <p><input type=url name=url></p>
-      <input type=submit value=Upload>
-    </form>
-    """
+        return render_template('index.html', stream_url=stream_url)
+    return render_template('index.html')
