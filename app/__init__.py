@@ -48,8 +48,6 @@ def index():
         ydl_opts = {}
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             result = ydl.extract_info(request.form['url'], download=False)
-
-        if 'url' in result:
-            stream_url = result['url']
-        return render_template('index.html', stream_url=stream_url)
+        
+        return render_template('index.html', stream=result)
     return render_template('index.html')

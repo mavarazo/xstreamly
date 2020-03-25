@@ -1,33 +1,83 @@
 <!doctype html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/pure-min.css"
-        integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr47" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 
 <body>
-    <div class="pure-g">
-        <div class="pure-u-1-5"></div>
-        <div class="pure-u-3-5"><h2>{{ stream_url }}</h2></div>
-        <div class="pure-u-1-5"></div>
-    </div>
-
-    <div class="pure-g">
-        <div class="pure-u-1-5"></div>
-        <div class="pure-u-3-5">
-            <form class="pure-form pure-form-aligned" action="{{ url_for('index') }}" method="POST">
-                <fieldset>
-                    <input type="url" class="pure-input-2-3" name="url" placeholder="URL" required>
-                    <button type="submit" class="pure-button pure-button-primary">Submit</button>
-                </fieldset>
-            </form>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="card m-5">
+                    <div class="card-body">
+                        <form class="form" action="{{ url_for('index') }}" method="POST">
+                            <div class="form-row">
+                                <div class="col-10">
+                                    <input type="url" class="form-control " id="urlId" name="url">
+                                </div>
+                                <div class="col">
+                                    <button type="submit" class="btn btn-primary mb-2">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="pure-u-1-5"></div>
+
+        {% if stream %}
+        <div class="row">
+            <div class="col">
+                <div class="card m-5">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ stream.title }}</h5>
+                        <p class="card-text">
+                            <div class="row">
+                                <div class="col">
+                                    URL
+                                </div>
+                                <div class="col-10">
+                                    <a href="{{ stream.url }}">{{ stream.url }}</a>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    Extension
+                                </div>
+                                <div class="col-10">
+                                    {{ stream.ext }}
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    Extractor
+                                </div>
+                                <div class="col-10">
+                                    {{ stream.extractor }}
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    Source URL
+                                </div>
+                                <div class="col-10">
+                                    <a href="{{ stream.webpage_url }}">{{ stream.webpage_url }}</a>
+                                </div>
+                            </div>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
     </div>
 </body>
 
