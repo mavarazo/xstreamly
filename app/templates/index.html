@@ -5,22 +5,22 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/darkly/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap.min.css') }}">
 </head>
 
 <body>
     <div class="container">
         <div class="row">
             <div class="col">
-                <div class="card mb-5 mt-5">
+                <div class="card mb-3">
                     <div class="card-body">
                         <form class="form" action="{{ url_for('index') }}" method="POST">
                             <div class="form-row">
-                                <div class="col-11">
+                                <div class="col-md-10">
                                     <input type="url" class="form-control " id="urlId" name="url">
                                 </div>
-                                <div class="mx-auto">
-                                    <button type="submit" class="btn btn-primary mb-2">Submit</button>
+                                <div class="col-md-2">
+                                    <button type="submit" class="btn btn-primary btn-block">Submit</button>
                                 </div>
                             </div>
                         </form>
@@ -32,15 +32,17 @@
         {% if stream %}
         <div class="row">
             <div class="col">
-                <div class="card">
-                    <div class="card-body">
+                <div class="card mb-3">
+                    <div class="card-header">
                         <h5 class="card-title">{{ stream.title }}</h5>
+                    </div>
+                    <div class="card-body">
                         <p class="card-text">
                             <div class="row">
                                 <div class="col">
                                     URL
                                 </div>
-                                <div class="col-10">
+                                <div class="col-md-10">
                                     <a href="{{ stream.url }}">{{ stream.url }}</a>
                                 </div>
                             </div>
@@ -49,7 +51,7 @@
                                 <div class="col">
                                     Extension
                                 </div>
-                                <div class="col-10">
+                                <div class="col-md-10">
                                     {{ stream.ext }}
                                 </div>
                             </div>
@@ -58,7 +60,7 @@
                                 <div class="col">
                                     Extractor
                                 </div>
-                                <div class="col-10">
+                                <div class="col-md-10">
                                     {{ stream.extractor }}
                                 </div>
                             </div>
@@ -67,11 +69,31 @@
                                 <div class="col">
                                     Source URL
                                 </div>
-                                <div class="col-10">
+                                <div class="col-md-10">
                                     <a href="{{ stream.webpage_url }}">{{ stream.webpage_url }}</a>
                                 </div>
                             </div>
                         </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+
+        {% if history %}
+        <div class="row">
+            <div class="col">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h5 class="card-title">History</h5>
+                    </div>
+                    <div class="card-body">
+                        {% for entry in history %}
+                        <p>
+                            <a class="card-text" href="{{ entry.url }}">{{ entry.title }}</a>
+                        </p>
+                        {% endfor %}
                     </div>
                 </div>
             </div>

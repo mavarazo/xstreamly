@@ -3,6 +3,7 @@
 app.db
 logs/
 migrations/
+database
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
