@@ -20,12 +20,10 @@ from flask import (
 import youtube_dl
 
 HISTORY_TABLE = '''
-CREATE TABLE IF NOT EXISTS history(id INTEGER PRIMARY KEY,
-                    title TEXT,
-                    url TEXT, 
-                    ext TEXT, 
-                    extractor TEXT,
-                    webpage_url TEXT)
+CREATE TABLE IF NOT EXISTS history(
+    id INTEGER PRIMARY KEY,
+    title TEXT,
+    webpage_url TEXT UNIQUE)
 '''
 
 def create_app():
@@ -78,7 +76,7 @@ def index():
         ydl_opts = {}
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             result = ydl.extract_info(request.form['url'], download=False)
-            save_history(result['title'], result['url'])
+            save_history(result['title'], result['webpage_url'])
         
         return render_template('index.html', stream=result, history=load_history())
     return render_template('index.html', history=load_history())
@@ -87,21 +85,21 @@ def index():
 def load_history():
     with app.app_context():
         cursor = get_db().cursor()
-        cursor.execute('''SELECT title, url FROM history''')
+        cursor.execute('''SELECT title, webpage_url FROM history ORDER BY id DESC''')
         result = cursor.fetchall()
         print(f'load_history: {result}')
         cursor.close()
         return result
 
 
-def save_history(title, url):
-    if not title or not url:
+def save_history(title, webpage_url):
+    if not title or not webpage_url:
         return
 
     with app.app_context():
         cursor = get_db().cursor()
-        cursor.execute('''INSERT INTO history(title, url)
-                  VALUES(?,?)''', (title, url))
+        cursor.execute('''INSERT OR IGNORE INTO history(title, webpage_url)
+                  VALUES(?,?)''', (title, webpage_url))
         get_db().commit()
-        print(f'save_history({title}, {url})')
+        print(f'save_history({title}, {webpage_url})')
         
