@@ -70,12 +70,13 @@ def close_connection(exception):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    stream_url = None
-    if request.method == 'POST':
+    stream_url = request.form['url'] if request.method == 'POST' else request.args.get('url')
+    
+    if stream_url:
         result = {}
         ydl_opts = {}
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-            result = ydl.extract_info(request.form['url'], download=False)
+            result = ydl.extract_info(stream_url, download=False)
             save_history(result['title'], result['webpage_url'])
         
         return render_template('index.html', stream=result, history=load_history())

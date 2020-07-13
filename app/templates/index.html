@@ -91,7 +91,7 @@
                     <div class="card-body">
                         {% for entry in history %}
                         <p>
-                            <a class="card-text" href="{{ entry.webpage_url }}">{{ entry.title }}</a>
+                            <a class="card-text" href="{{ url_for('index', url=entry.webpage_url) }}">{{ entry.title }}</a>
                         </p>
                         {% endfor %}
                     </div>
