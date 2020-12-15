@@ -88,7 +88,7 @@ def load_history():
         cursor = get_db().cursor()
         cursor.execute('''SELECT title, webpage_url FROM history ORDER BY id DESC''')
         result = cursor.fetchall()
-        print(f'load_history: {result}')
+        # print(f'load_history: {result}')
         cursor.close()
         return result
 
@@ -102,5 +102,5 @@ def save_history(title, webpage_url):
         cursor.execute('''INSERT OR IGNORE INTO history(title, webpage_url)
                   VALUES(?,?)''', (title, webpage_url))
         get_db().commit()
-        print(f'save_history({title}, {webpage_url})')
+        # print(f'save_history({title}, {webpage_url})')
         
