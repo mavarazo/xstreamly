@@ -16,8 +16,12 @@ from flask import (
     redirect,
     url_for
 )
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 import youtube_dl
+
+from config import Config
 
 HISTORY_TABLE = '''
 CREATE TABLE IF NOT EXISTS history(
@@ -26,8 +30,20 @@ CREATE TABLE IF NOT EXISTS history(
     webpage_url TEXT UNIQUE)
 '''
 
-def create_app():
-    app = Flask(__name__)
+
+db = SQLAlchemy()
+migrate = Migrate()
+
+
+def create_app(config_class=Config):
+    app = Flask(__name__, instance_relative_config=True)
+    app.config.from_object(config_class)
+
+    db.init_app(app)
+    migrate.init_app(app, db)
+
+    from app.serie import bp as serie_bp
+    app.register_blueprint(serie_bp)
 
     if not app.debug and not app.testing:
         if not os.path.exists('logs'):
@@ -48,6 +64,7 @@ def create_app():
 
 app = create_app()
 
+from app import models
 
 def get_db():
     db = getattr(g, '_database', None)

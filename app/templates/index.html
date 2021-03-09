@@ -1,119 +1,84 @@
-<!doctype html>
-<html lang="en">
+{% extends 'base.html' %}
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
+{% block content %}
 
-    <title>XStraemly - 0.1</title>
+<div class="row m-1 py-2 px-3">
+    <div class="col mx-auto">
+        <form action="{{ url_for('index') }}" method="POST"
+            class="row bg-white rounded shadow-sm align-items-center justify-content-center">
+            <div class="col">
+                <input type="url" class="form-control border-0 bg-transparent rounded" id="urlId"
+                    name="url" placeholder="URL" aria-label="URL">
+            </div>
+            <div class="col-auto px-0 mx-0 me-2 my-2">
+                <button type="button" class="btn btn-primary">Fetch</button>
+            </div>
+        </form>
+    </div>
+</div>
 
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='adminlte.min.css') }}">
-    <!-- Google Font: Source Sans Pro -->
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-</head>
-
-<body class="hold-transition layout-top-nav">
-    <div class="wrapper">
-        <div class="content-wrapper">
-            <div class="content">
-                <div class="container-fluid">
+{% if stream %}
+<div class="row m-1 py-2 px-1">
+    <div class="col mx-auto">
+        <div class="card card-purple">
+            <div class="card-header">
+                <h5 class="card-title">{{ stream.title }}</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">
                     <div class="row">
                         <div class="col">
-                            <div class="card mt-3 mb-3 card-purple">
-                                <div class="card-body">
-                                    <form class="form" action="{{ url_for('index') }}" method="POST">
-                                        <div class="form-row">
-                                            <div class="col-md-10">
-                                                <input type="url" class="form-control " id="urlId" name="url">
-                                            </div>
-                                            <div class="col-md-2">
-                                                <button type="submit" class="btn btn-primary btn-block">Submit</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
+                            URL
+                        </div>
+                        <div class="col-md-10">
+                            <a href="{{ stream.url }}">{{ stream.url }}</a>
                         </div>
                     </div>
 
-                    {% if stream %}
                     <div class="row">
                         <div class="col">
-                            <div class="card mb-3 card-purple">
-                                <div class="card-header">
-                                    <h5 class="card-title">{{ stream.title }}</h5>
-                                </div>
-                                <div class="card-body">
-                                    <p class="card-text">
-                                        <div class="row">
-                                            <div class="col">
-                                                URL
-                                            </div>
-                                            <div class="col-md-10">
-                                                <a href="{{ stream.url }}">{{ stream.url }}</a>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col">
-                                                Extension
-                                            </div>
-                                            <div class="col-md-10">
-                                                {{ stream.ext }}
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col">
-                                                Extractor
-                                            </div>
-                                            <div class="col-md-10">
-                                                {{ stream.extractor }}
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col">
-                                                Source URL
-                                            </div>
-                                            <div class="col-md-10">
-                                                <a href="{{ stream.webpage_url }}">{{ stream.webpage_url }}</a>
-                                            </div>
-                                        </div>
-                                    </p>
-                                </div>
-                            </div>
+                            Extension
+                        </div>
+                        <div class="col-md-10">
+                            {{ stream.ext }}
                         </div>
                     </div>
-                    {% endif %}
 
-
-                    {% if history %}
                     <div class="row">
                         <div class="col">
-                            <div class="card mb-3 card-purple">
-                                <div class="card-header">
-                                    <h5 class="card-title">History</h5>
-                                </div>
-                                <div class="card-body">
-                                    <div class="list-group list-group-flush">
-                                        {% for entry in history %}
-                                        <p>
-                                            <a class="list-group-item p-0"
-                                                href="{{ url_for('index', url=entry.webpage_url) }}">{{ entry.title }}</a>
-                                        </p>
-                                        {% endfor %}
-                                    </div>
-                                </div>
-                            </div>
+                            Extractor
+                        </div>
+                        <div class="col-md-10">
+                            {{ stream.extractor }}
                         </div>
                     </div>
-                    {% endif %}
-                </div>
+
+                    <div class="row">
+                        <div class="col">
+                            Source URL
+                        </div>
+                        <div class="col-md-10">
+                            <a href="{{ stream.webpage_url }}">{{ stream.webpage_url }}</a>
+                        </div>
+                    </div>
+                </p>
             </div>
         </div>
     </div>
-</body>
+</div>
+{% endif %}
 
-</html>
+
+{% if history %}
+<div class="row m-1 py-2 px-1">
+    <div class="col mx-auto">
+        <div class="list-group">
+            {% for entry in history %}
+            <a href="{{ url_for('index', url=entry.webpage_url) }}"
+                class="list-group-item list-group-item-action">{{ entry.title }}</a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
