@@ -3,32 +3,13 @@ from __future__ import unicode_literals
 import logging
 from logging.handlers import RotatingFileHandler
 import os
-import sqlite3
 
 from werkzeug.utils import secure_filename
-from flask import (
-    g,
-    Flask,
-    jsonify,
-    send_from_directory,
-    render_template,
-    request,
-    redirect,
-    url_for
-)
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
-import youtube_dl
-
 from config import Config
-
-HISTORY_TABLE = '''
-CREATE TABLE IF NOT EXISTS history(
-    id INTEGER PRIMARY KEY,
-    title TEXT,
-    webpage_url TEXT UNIQUE)
-'''
 
 
 db = SQLAlchemy()
