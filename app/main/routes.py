@@ -19,8 +19,8 @@ def index():
             result = ydl.extract_info(stream_url, download=False)
             save_history(result['title'], result['webpage_url'])
         
-        return render_template('index.html', stream=result, history=load_history())
-    return render_template('index.html', history=load_history())
+        return render_template('main.index.html', stream=result, history=load_history())
+    return render_template('main.index.html', history=load_history())
 
 
 def load_history():

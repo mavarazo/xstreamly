@@ -4,7 +4,7 @@
 
 <div class="row m-1 py-2 px-3">
     <div class="col mx-auto">
-        <form action="{{ url_for('index') }}" method="POST"
+        <form action="{{ url_for('main.index') }}" method="POST"
             class="row bg-white rounded shadow-sm align-items-center justify-content-center">
             <div class="col">
                 <input type="url" class="form-control border-0 bg-transparent rounded" id="urlId"
@@ -74,8 +74,8 @@
     <div class="col mx-auto">
         <div class="list-group">
             {% for entry in history %}
-            <a href="{{ url_for('index', url=entry.webpage_url) }}"
-                class="list-group-item list-group-item-action">{{ entry.title }}</a>
+            <a href="{{ url_for('main.index', url=entry.webpage_url) }}"
+                class="list-group-item list-group-item-action">{{ entry.name }}</a>
             {% endfor %}
         </div>
     </div>

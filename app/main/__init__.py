@@ -1,4 +1,4 @@
-rom flask import Blueprint
+from flask import Blueprint
 
 bp = Blueprint('main', __name__)
 
