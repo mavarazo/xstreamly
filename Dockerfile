@@ -1,6 +1,6 @@
 FROM python:3.8-alpine
 
-ENV DATABASE_URL=/config/xstreamly.db
+ENV DATABASE_URL=sqlite:///config/xstreamly.db
 
 WORKDIR /xstreamly
 
