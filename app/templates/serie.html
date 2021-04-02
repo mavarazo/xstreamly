@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if serie %}
+<h1>{{ serie.name }}</h1>
+
+{{ serie.overview or '' }}
+
+{% if serie.episodes %}
+<div class="row m-1 py-2 px-1">
+    <div class="col mx-auto">
+        <div class="list-group">
+            {% for episode in serie.episodes %}
+            <a class="list-group-item list-group-item-action" href="{{ url_for('main.play', episode_id=episode.id) }}"
+                target="_blank">
+                Season {{ '%02d' % episode.season_nr }} Episode {{ '%02d' % episode.episode_nr }}
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endif %}
+{% endblock %}

@@ -1,28 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="row m-1 py-2 px-3">
-    <div class="col mx-auto">
-        <form action="{{ url_for('serie.search') }}" method="POST"
-            class="row bg-white rounded shadow-sm align-items-center justify-content-center">
-            <div class="col">
-                <input type="text" class="form-control border-0 bg-transparent rounded" id="name" name="name"
-                    placeholder="Name" aria-label="Name">
-            </div>
-            <div class="col-auto px-0 mx-0 me-2 my-2">
-                <button type="button" class="btn btn-primary">Search</button>
-            </div>
-        </form>
-    </div>
-</div>
-
 {% if series %}
 <div class="row m-1 py-2 px-1">
     <div class="col mx-auto">
         <div class="list-group">
             {% for serie in series %}
-            <a href="{{ url_for('serie.show', serie_id=serie.id) }}"
-                class="list-group-item list-group-item-action">{{ serie.name }}</a>
+            <a class="list-group-item list-group-item-action" href="{{ url_for('serie.show', serie_id=serie.id) }}">
+                {{ serie.name }}
+            </a>
             {% endfor %}
         </div>
     </div>
