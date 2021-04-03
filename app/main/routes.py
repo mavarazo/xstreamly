@@ -20,7 +20,7 @@ def index():
 
     if stream_url:
         result = {}
-        ydl_opts = {}
+        ydl_opts = {'verbose': True}
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             result = ydl.extract_info(stream_url, download=False)
             episode = save_episode(result['title'], result['webpage_url'])
@@ -35,7 +35,8 @@ def play(episode_id):
     if not episode:
         return redirect(url_for('main.index'))
     
-    with youtube_dl.YoutubeDL({}) as ydl:
+    ydl_opts = {'verbose': True}
+    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
         result = ydl.extract_info(episode.origin_url, download=False)
         return redirect(result['url'])
 
