@@ -76,7 +76,7 @@ def save_serie(name):
         overview = response['overview']
         poster = response['poster_path']
 
-    serie = Serie(name=name, tmdb_id=tmdb_id, overview=overview or '', poster=poster or '')
+    serie = Serie(name=name, tmdb_id=tmdb_id or None, overview=overview or '', poster=poster or '')
     db.session.add(serie)
     db.session.commit()
     return serie
