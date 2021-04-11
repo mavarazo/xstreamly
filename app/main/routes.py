@@ -71,12 +71,11 @@ def save_serie(name):
         return serie
     
     response = fetch_series_from_api_by_name(name)
-    if response:
-        tmdb_id = response['id']
-        overview = response['overview']
-        poster = response['poster_path']
+    tmdb_id = response['id'] if response else None
+    overview = response['overview'] if response else ''
+    poster = response['poster_path'] if response else ''
 
-    serie = Serie(name=name, tmdb_id=tmdb_id or None, overview=overview or '', poster=poster or '')
+    serie = Serie(name=name, tmdb_id=tmdb_id, overview=overview, poster=poster)
     db.session.add(serie)
     db.session.commit()
     return serie
