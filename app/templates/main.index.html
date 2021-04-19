@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row m-1 py-2 px-3">
+    <div class="col mx-auto">
+        <form action="{{ url_for('main.index') }}" method="POST"
+            class="row bg-white rounded shadow-sm align-items-center justify-content-center">
+            <div class="col">
+                <input type="url" class="form-control border-0 bg-transparent rounded" id="urlId" name="url"
+                    placeholder="URL" aria-label="URL">
+            </div>
+            <div class="col-auto px-0 mx-0 me-2 my-2">
+                <button type="button" class="btn btn-primary">Fetch</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% if history %}
+<div class="row m-1 py-2 px-1">
+    <div class="col mx-auto">
+        <div class="list-group">
+            {% for episode in history %}
+            <a class="list-group-item list-group-item-action" href="{{ url_for('main.play', episode_id=episode.id) }}"
+                target="_blank">
+                {% if episode.serie.name|length %}
+                {{ episode.serie.name }} Season {{ '%02d' % episode.season_nr }} Episode
+                {{ '%02d' % episode.episode_nr }}
+                {% else %}
+                {{ episode.origin_name }}</h5>
+                {% endif %}
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

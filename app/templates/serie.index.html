@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if series %}
+<div class="row m-1 py-2 px-1">
+    <div class="col mx-auto">
+        <div class="list-group">
+            {% for serie in series %}
+            <a class="list-group-item list-group-item-action" href="{{ url_for('serie.show', serie_id=serie.id) }}">
+                {{ serie.name }}
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
