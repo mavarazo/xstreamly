@@ -74,8 +74,9 @@ def save_serie(name):
     tmdb_id = response['id'] if response else None
     overview = response['overview'] if response else ''
     poster = response['poster_path'] if response else ''
+    backdrop = response['backdrop_path'] if response else ''
 
-    serie = Serie(name=name, tmdb_id=tmdb_id, overview=overview, poster=poster)
+    serie = Serie(name=name, tmdb_id=tmdb_id, overview=overview, backdrop=backdrop, poster=poster)
     db.session.add(serie)
     db.session.commit()
     return serie

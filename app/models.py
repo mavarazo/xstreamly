@@ -7,6 +7,7 @@ class Serie(db.Model):
     name = db.Column(db.String(255))
     tmdb_id = db.Column(db.Integer)
     overview = db.Column(db.Text)
+    backdrop = db.Column(db.String(255))
     poster = db.Column(db.String(255))
     episodes = db.relationship("Episode", back_populates="serie", order_by="Episode.season_nr, Episode.episode_nr")
 

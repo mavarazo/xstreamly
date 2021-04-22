@@ -1,22 +1,36 @@
 {% extends 'base.html' %}
 
+{% block content_full %}
+{% if serie %}
+<div
+    style="background: linear-gradient(to right, rgba(81.18%, 77.25%, 69.80%, 1.00) 150px, rgba(81.18%, 77.25%, 69.80%, 0.84) 100%), url({{'https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces' + serie.backdrop}}) no-repeat fixed center;">
+    <div class="row justify-content-md-center">
+        <div class="col-2 m-1 py-2 px-1">
+            {% if serie.poster %}
+            <img src="https://www.themoviedb.org/t/p/w300_and_h450_bestv2{{ serie.poster }}"
+                class="rounded mx-auto d-block" style="max-height: 250px;" />
+            {% endif %}
+        </div>
+        <div class="col-8">
+            <h1>{{ serie.name }}</h1>
+            {{ serie.overview or '' }}
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
 {% block content %}
 {% if serie %}
-<h1>{{ serie.name }}</h1>
-
-{{ serie.overview or '' }}
-
 {% if serie.episodes %}
-<div class="row m-1 py-2 px-1">
-    <div class="col mx-auto">
-        <div class="list-group">
-            {% for episode in serie.episodes %}
-            <a class="list-group-item list-group-item-action" href="{{ url_for('main.play', episode_id=episode.id) }}"
-                target="_blank">
-                Season {{ '%02d' % episode.season_nr }} Episode {{ '%02d' % episode.episode_nr }}
-            </a>
-            {% endfor %}
-        </div>
+<div class="col-10 m-1 py-2 px-1">
+    <div class="list-group">
+        {% for episode in serie.episodes %}
+        <a class="list-group-item list-group-item-action" href="{{ url_for('main.play', episode_id=episode.id) }}"
+            target="_blank">
+            Season {{ '%02d' % episode.season_nr }} Episode {{ '%02d' % episode.episode_nr }}
+        </a>
+        {% endfor %}
     </div>
 </div>
 {% endif %}
