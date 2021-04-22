@@ -2,8 +2,7 @@
 
 {% block content_full %}
 {% if serie %}
-<div
-    style="background: linear-gradient(to right, rgba(81.18%, 77.25%, 69.80%, 1.00) 150px, rgba(81.18%, 77.25%, 69.80%, 0.84) 100%), url({{'https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces' + serie.backdrop}}) no-repeat fixed center;">
+<div {% if serie.backdrop %} style="background: linear-gradient(to right, rgba(81.18%, 77.25%, 69.80%, 1.00) 150px, rgba(81.18%, 77.25%, 69.80%, 0.84) 100%), url({{'https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces' + serie.backdrop}}), no-repeat, fixed, center;"{% endif %}>
     <div class="row justify-content-md-center">
         <div class="col-2 m-1 py-2 px-1">
             {% if serie.poster %}
