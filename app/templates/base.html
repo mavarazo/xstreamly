@@ -41,13 +41,13 @@
     </nav>
 
     <main class="container-fluid">
-        <div class="row">
+        <div class="row row bg-light">
             {% for message in get_flashed_messages() %}
             <div class="flash">{{ message }}</div>
             {% endfor %}
 
             {% block content_full %}{% endblock %}
-            <div class="row bg-light p-5 rounded">
+            <div class="p-5 rounded">
             {% block content %}{% endblock %}
             </div>
         </div>

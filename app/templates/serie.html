@@ -1,16 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content_full %}
-{% if serie %}
-<div {% if serie.backdrop %} style="background: linear-gradient(to right, rgba(81.18%, 77.25%, 69.80%, 1.00) 150px, rgba(81.18%, 77.25%, 69.80%, 0.84) 100%), url({{'https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces' + serie.backdrop}}), no-repeat, fixed, center;"{% endif %}>
+{% if serie and serie.poster %}
+<div {% if serie.backdrop %}
+    style="background: linear-gradient(to right, rgb(178, 178, 178, 0.90) 150px, rgba(178, 178, 178, 0.80) 100%), url({{'https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces' + serie.backdrop}}), no-repeat, fixed, center;"
+    {% endif %}>
     <div class="row justify-content-md-center">
-        <div class="col-2 m-1 py-2 px-1">
-            {% if serie.poster %}
+        <div class="col-2 m-2 py-2 px-1">
             <img src="https://www.themoviedb.org/t/p/w300_and_h450_bestv2{{ serie.poster }}"
                 class="rounded mx-auto d-block" style="max-height: 250px;" />
-            {% endif %}
         </div>
-        <div class="col-8">
+        <div class="col-8 m-1 py-5 px-1">
             <h1>{{ serie.name }}</h1>
             {{ serie.overview or '' }}
         </div>
@@ -21,15 +21,24 @@
 
 {% block content %}
 {% if serie %}
+{% if not serie.poster %}
+<div class="row m-1 py-2 px-1">
+    <div class="col mx-auto">
+        <h1>{{ serie.name }}</h1>
+    </div>
+</div>
+{% endif %}
 {% if serie.episodes %}
-<div class="col-10 m-1 py-2 px-1">
-    <div class="list-group">
-        {% for episode in serie.episodes %}
-        <a class="list-group-item list-group-item-action" href="{{ url_for('main.play', episode_id=episode.id) }}"
-            target="_blank">
-            Season {{ '%02d' % episode.season_nr }} Episode {{ '%02d' % episode.episode_nr }}
-        </a>
-        {% endfor %}
+<div class="row m-1 py-2 px-1">
+    <div class="col mx-auto">
+        <div class="list-group">
+            {% for episode in serie.episodes %}
+            <a class="list-group-item list-group-item-action" href="{{ url_for('main.play', episode_id=episode.id) }}"
+                target="_blank">
+                Season {{ '%02d' % episode.season_nr }} Episode {{ '%02d' % episode.episode_nr }}
+            </a>
+            {% endfor %}
+        </div>
     </div>
 </div>
 {% endif %}
